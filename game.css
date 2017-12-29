@@ -8,8 +8,9 @@ h1, p {
     text-align: center;
 }
 
-button {
+#button1 {
     margin-left: 20px;
+    display: inline-block;
 }
 
 table {
