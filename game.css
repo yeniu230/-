@@ -1,0 +1,26 @@
+#main {
+    width: 960px;
+    margin: auto;
+    box-sizing: border-box;
+}
+
+h1, p {
+    text-align: center;
+}
+
+button {
+    margin-left: 20px;
+}
+
+table {
+    padding: 20px;
+    background: #d376f4;
+    margin: auto;
+}
+
+td {
+    width: 150px;
+    height: 150px;
+    background-color: #ddd;
+    text-align: center;
+}
