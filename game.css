@@ -8,15 +8,11 @@ h1, p {
     text-align: center;
 }
 
-#button1 {
-    margin-left: 20px;
-    display: inline-block;
-}
-
 table {
-    padding: 20px;
+    padding: 8px;
     background: #d376f4;
     margin: auto;
+    border-spacing: 12px;
 }
 
 td {
@@ -24,4 +20,17 @@ td {
     height: 150px;
     background-color: #ddd;
     text-align: center;
+}
+
+.end {
+    display: none;
+    margin: auto;
+    width: 400px;
+    height: 140px;
+    text-align: center;
+    line-height: 10px;
+    background: #a53;
+    padding: 20px;
+    position: absolute;
+    top: 200px;
 }

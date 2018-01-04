@@ -11,7 +11,8 @@ for (let i = 0; i < 4; i++) {
     }
     str += '</tr>';
 }
-$('table').append (str);//如果不用jQuery,应该怎么写才正确。
+$('table').append (str);
+//如果不用jQuery,应该怎么写才正确。
 //为什么下面这行无效？？
 //document.getElementsByTagName('table').innerHTML = str;
 
@@ -36,9 +37,26 @@ Array.prototype.shuffle = function() {
 }
 var randomArray = double.shuffle();//将数组组内随机交换位置
 
+//初始化时间
+var times = 0;
+function addTime() {
+    if (newStar == 1) {
+        setTimeout('addTime()', '1000');
+        $('.times').empty().append(times);
+        times++;
+    }else if (newStar == 2) {
+        return times;
+    }
+}
+
+var newStar = 0;
 var loc = [];//临时储存位置
 var main = [];//临时储存参数
 $('td').click(function flips(){
+    if (newStar == 0) {
+        newStar = 1;
+        addTime();
+    }
     /*tdIndex获取当前位置
     其实上面生成表格时ID里面有个Index值，怎么直接使用Index来定位位置？
     */
@@ -50,22 +68,38 @@ $('td').click(function flips(){
         loc.push(tdIndex);//将位置临时储存
         main.push(randomArray[tdIndex])//将数字临时储存
     }
-    //限制临时储存的个数
+    //限制临时储存的个数，延时执行
     if (main.length == 2) {
-        setTimeout("records()","500");//延时执行
+        setTimeout("records()","500");
     }
 });
+
 //参数匹配
+var counts = 0;
 function records() {
-    //如果临时储存的值不等，
+    //如果临时储存的值不等，清空表格内容,并将临时储存的数组清空
         if (main[0] != main[1]) {
             let a = loc[0];
             let b = loc[1];
-            //清空表格内容
             $("#img"+a).empty();
             $("#img"+b).empty();
+        }else {
+            counts++;
+            /*counts的值有BUG暂时搞不懂？？？
+            有时候==8时还有两个没翻出来，要调到9，有时候9也不管用，要调到10。
+            另外records()延时了0.5秒执行，这样的话是不是newStar=2传入
+            addTime()时导致最终计时多了0.5秒？？？？
+            如果多了，应该有什么好的解决方法。
+            */
+            if (counts == 8) {
+                newStar = 2;
+                addTime()
+                endGame();
+            }
         }
-        //将临时储存的数组清空
         main = [];
         loc = [];
     }
+function endGame() {
+    $('.end').css("display","block");
+}
