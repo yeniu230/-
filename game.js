@@ -19,11 +19,17 @@ $('table').append (str);
 //创建随机数列
 var num = [];
 //创建一个数字1-8的数组
-for(var i = 1; i <= 8; i++) {
+/*for(var i = 1; i <= 8; i++) {
     num.push(i);
+}*/
+
+//创建水果数组
+for (let i = 0; i < 8; i++) {
+    num[i] = '\<img src\=\"img\/' + i +'\.png\" alt=\"\"\>';
 }
+
 var sameNum = num;//复制数组
-var double = num.concat(sameNum);//使数组内分别包含两个1-8
+var double = num.concat(sameNum);//使数组内分别包含两个相同值
 //将数组随机排列函数
 Array.prototype.shuffle = function() {
     var input = this;
@@ -52,6 +58,13 @@ function addTime() {
 var newStar = 0;
 var loc = [];//临时储存位置
 var main = [];//临时储存参数
+
+/*var tds = document.getElementsByTagName('td')是一个数组，
+可以通过tds[index]提取单个内容，
+但是var jTds = $('td')好像不是数组，不能使用jTds[index]；
+两个的区别是什么，怎么互相装换？
+*/
+
 $('td').click(function flips(){
     if (newStar == 0) {
         newStar = 1;
@@ -62,9 +75,9 @@ $('td').click(function flips(){
     */
     var tdIndex = parseInt($(this).attr('id').replace(/[^0-9]/ig,""));
     //识别没有内容的表格并且保证不会连续快速点击几个数字
-    if (!$(this).text() && main.length < 2) {
+    if (!$(this).html() && main.length < 2) {
         //点击后将对应位置的随机数赋值给表格
-        this.append(randomArray[tdIndex])
+        $(this).append(randomArray[tdIndex]);
         loc.push(tdIndex);//将位置临时储存
         main.push(randomArray[tdIndex])//将数字临时储存
     }
@@ -86,7 +99,7 @@ function records() {
         }else {
             counts++;
             /*counts的值有BUG暂时搞不懂？？？
-            有时候==8时还有两个没翻出来，要调到9，有时候9也不管用，要调到10。
+            有时候==8时还有两个没翻出来（好像点快了就不行），要调到9，有时候9也不管用，要调到10。
             另外records()延时了0.5秒执行，这样的话是不是newStar=2传入
             addTime()时导致最终计时多了0.5秒？？？？
             如果多了，应该有什么好的解决方法。
@@ -100,6 +113,10 @@ function records() {
         main = [];
         loc = [];
     }
+
 function endGame() {
     $('.end').css("display","block");
+    $('button').click(function() {
+        location.reload();
+    });
 }
