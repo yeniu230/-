@@ -65,6 +65,9 @@ var main = [];//临时储存参数
 两个的区别是什么，怎么互相装换？
 */
 
+//储存阴影值
+var shadow = $('td').css('box-shadow');
+
 $('td').click(function flips(){
     if (newStar == 0) {
         newStar = 1;
@@ -77,7 +80,8 @@ $('td').click(function flips(){
     //识别没有内容的表格并且保证不会连续快速点击几个数字
     if (!$(this).html() && main.length < 2) {
         //点击后将对应位置的随机数赋值给表格
-        $(this).append(randomArray[tdIndex]);
+        $(this).append(randomArray[tdIndex]);//点击显示内容
+        $(this).css('box-shadow', 'none');//点击消除阴影
         loc.push(tdIndex);//将位置临时储存
         main.push(randomArray[tdIndex])//将数字临时储存
     }
@@ -96,6 +100,8 @@ function records() {
             let b = loc[1];
             $("#img"+a).empty();
             $("#img"+b).empty();
+            $("#img"+a).css('box-shadow', shadow);
+            $("#img"+b).css('box-shadow', shadow);
         }else {
             counts++;
             /*counts的值有BUG暂时搞不懂？？？
