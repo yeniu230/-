@@ -8,13 +8,22 @@
     <body>
         <div id="main">
             <h1>Match Game</h1>
-            <p>Times : <span class="times">0</span> 秒</p>
+            <div class="total">
+                <div class="stars">
+                    <img src="img/star.png" alt="star" class="star" id="fStar">
+                    <img src="img/star.png" alt="star" class="star">
+                    <img src="img/star.png" alt="star" class="star">
+                </div>
+                <button type="button" name="button" class="re">刷新</button>
+            </div>
+            <p>Times : <span class="times">0</span> 秒 &nbsp &nbsp &nbsp &nbsp Moves:<span class="moves">0</span>步</p>
             <table></table>
         </div>
         <div class="end">
             <div class="endWords">
                 <h2>恭喜您！</h2>
                 <p>完成游戏使用了<span class="times"></span>秒</p>
+                <p>共<span class="moves"></span>步</p>
                 <button type="button" name="button">重新开始</button>
             </div>
         </div>

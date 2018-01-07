@@ -12,9 +12,6 @@ for (let i = 0; i < 4; i++) {
     str += '</tr>';
 }
 $('table').append (str);
-//如果不用jQuery,应该怎么写才正确。
-//为什么下面这行无效？？
-//document.getElementsByTagName('table').innerHTML = str;
 
 //创建随机数列
 var num = [];
@@ -55,32 +52,37 @@ function addTime() {
     }
 }
 
+$('button').click(function() {
+    location.reload();
+});
+
 var newStar = 0;
 var loc = [];//临时储存位置
 var main = [];//临时储存参数
-
-/*var tds = document.getElementsByTagName('td')是一个数组，
-可以通过tds[index]提取单个内容，
-但是var jTds = $('td')好像不是数组，不能使用jTds[index]；
-两个的区别是什么，怎么互相装换？
-*/
 
 //储存阴影值
 var shadow = $('td').css('box-shadow');
 
 $('td').click(function flips(){
+    if ($(this).css('box-shadow') === 'none' || main.length > 1) {
+        return;
+    }
+
     if (newStar == 0) {
         newStar = 1;
         addTime();
     }
-    /*tdIndex获取当前位置
-    其实上面生成表格时ID里面有个Index值，怎么直接使用Index来定位位置？
-    */
-    var tdIndex = parseInt($(this).attr('id').replace(/[^0-9]/ig,""));
+
+    var tdIndex = $('td').index(this);
     //识别没有内容的表格并且保证不会连续快速点击几个数字
     if (!$(this).html() && main.length < 2) {
         //点击后将对应位置的随机数赋值给表格
         $(this).append(randomArray[tdIndex]);//点击显示内容
+        /*80行代码，我之前用数字测试时写成
+        this.append(randomArray[tdIndex])可以正常运行;
+        但是换成图片时前面写this,图片不能正常显示，
+        但是chrome侧边的控制栏里的td元素里已经正确显示代码信息，
+        但是显示出来的不是图片而是代码，这是为什么？*/
         $(this).css('box-shadow', 'none');//点击消除阴影
         loc.push(tdIndex);//将位置临时储存
         main.push(randomArray[tdIndex])//将数字临时储存
@@ -93,7 +95,19 @@ $('td').click(function flips(){
 
 //参数匹配
 var counts = 0;
+var steps = 0;
 function records() {
+    steps++;
+    $('.moves').empty().append(steps);
+    var fs = document.getElementById('fStar');
+    switch (steps) {
+        case 12:
+            fs.nextElementSibling.remove();
+            break;
+        case 16:
+            fs.nextElementSibling.remove();
+            break;
+    }
     //如果临时储存的值不等，清空表格内容,并将临时储存的数组清空
         if (main[0] != main[1]) {
             let a = loc[0];
@@ -104,12 +118,6 @@ function records() {
             $("#img"+b).css('box-shadow', shadow);
         }else {
             counts++;
-            /*counts的值有BUG暂时搞不懂？？？
-            有时候==8时还有两个没翻出来（好像点快了就不行），要调到9，有时候9也不管用，要调到10。
-            另外records()延时了0.5秒执行，这样的话是不是newStar=2传入
-            addTime()时导致最终计时多了0.5秒？？？？
-            如果多了，应该有什么好的解决方法。
-            */
             if (counts == 8) {
                 newStar = 2;
                 addTime()
@@ -121,8 +129,6 @@ function records() {
     }
 
 function endGame() {
+    $('.endWords>h2').after($('.stars'));
     $('.end').css("display","block");
-    $('button').click(function() {
-        location.reload();
-    });
 }

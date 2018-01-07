@@ -41,6 +41,10 @@ td {
     margin: auto;
 }
 
+h2 {
+    margin-bottom: 30px;
+}
+
 img {
     width: 80px;
     height: 80px;
@@ -48,4 +52,28 @@ img {
 
 button {
     padding: 6px 15px;
+}
+
+.total {
+    text-align: center;
+    width: 960px;
+}
+
+.re {
+    width: 80px;
+    height: 30px;
+    text-align: right;
+    text-align: center;
+    margin: auto;
+}
+
+.stars {
+    margin: -10px auto 10px;
+    width: 960px;
+    text-align: center;
+}
+
+.star {
+    width: 15px;
+    height: 15px;
 }
